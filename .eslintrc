@@ -31,14 +31,6 @@
         "format": ["PascalCase", "camelCase", "UPPER_CASE"],
         "leadingUnderscore": "allow",
         "trailingUnderscore": "allow"
-      },
-      {
-        "selector": "typeLike",
-        "format": ["PascalCase"]
-      },
-      {
-        "selector": "function",
-        "format": ["PascalCase", "camelCase"]
       }
     ]
   },
