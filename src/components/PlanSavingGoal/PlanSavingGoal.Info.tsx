@@ -19,31 +19,21 @@ export const PlanSavingGoalInfo: FunctionComponent<PlanSavingGoalInfoProps> = ({
   }, [monthsDiff, amount]);
 
   return (
-    <ST.InfoTable>
-      <thead>
-        <tr>
-          <td>Monthly amount</td>
-          <td>
-            <strong>${monthAmount}</strong>
-          </td>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <td colSpan={2}>
-            <p>
-              You{`’`}re planning{' '}
-              <strong>
-                {monthsDiff} monthly deposit{monthsDiff > 1 ? 's' : ''}
-              </strong>{' '}
-              to reach your <strong>${formatValue({ value: amount, decimalScale: 2 })}</strong> goal by{' '}
-              <strong>
-                {monthName} {year}.
-              </strong>
-            </p>
-          </td>
-        </tr>
-      </tfoot>
-    </ST.InfoTable>
+    <ST.PlanSavingGoalInfo>
+      <h3>
+        <span>Monthly amount</span>
+        <strong>${monthAmount}</strong>
+      </h3>
+      <p>
+        You{`’`}re planning{' '}
+        <strong>
+          {monthsDiff} monthly deposit{monthsDiff > 1 ? 's' : ''}
+        </strong>{' '}
+        to reach your <strong>${formatValue({ value: amount, decimalScale: 2 })}</strong> goal by{' '}
+        <strong>
+          {monthName} {year}.
+        </strong>
+      </p>
+    </ST.PlanSavingGoalInfo>
   );
 };
