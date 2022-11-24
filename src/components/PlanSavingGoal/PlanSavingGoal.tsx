@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
+import BuyAHouse from 'assets/icons/buy-a-house.svg';
 import { Card } from 'components';
 
 import { PlanSavingGoalForm } from './PlanSavingGoal.Form';
@@ -12,7 +13,7 @@ export const PlanSavingGoal: FunctionComponent<PlanSavingGoalProps> = (): JSX.El
   return (
     <Card>
       <Card.Header>
-        <img src="" alt="" />
+        <img src={BuyAHouse} alt="Buy a house" />
         <h1>
           Buy a house
           <br />

@@ -1,8 +1,13 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react';
+import React, { FunctionComponent, KeyboardEventHandler, useCallback, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import CurrencyInput, { formatValue } from 'react-currency-input-field';
 
-import { Button } from 'components';
+import { Button, Field, Icon, InputCurrency, InputDate, useInputDateValue } from 'components';
+
+import DollarSign from 'assets/icons/dollar-sign.svg';
+import ChevronLeft from 'assets/icons/chevron-left.svg';
+import ChevronRight from 'assets/icons/chevron-right.svg';
+
+import { PlanSavingGoalInfo } from './PlanSavingGoal.Info';
 
 type Inputs = {
   amount: string;
@@ -29,24 +34,9 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
   });
 
   const amount = watch('amount');
-  const [year, month] = watch('reachDate').split('-');
+  const reachDate = watch('reachDate');
 
-  const date = useMemo(() => {
-    return new Date(`${year}-${month}-10`);
-  }, [year, month]);
-
-  const monthName = useMemo(() => {
-    return date.toLocaleDateString('en', { month: 'long' });
-  }, [date]);
-
-  const monthDiff = useMemo(() => {
-    return date.getMonth() - today.getMonth() + 12 * (date.getFullYear() - today.getFullYear());
-  }, [date, today]);
-
-  const monthAmount = useMemo(() => {
-    const value = parseFloat(amount) / monthDiff;
-    return formatValue({ value: value.toFixed(2), decimalScale: 2 });
-  }, [monthDiff, amount]);
+  const { date, monthsDiff } = useInputDateValue(reachDate);
 
   const handleAddMonth = useCallback(() => {
     const newDate = new Date(date);
@@ -55,11 +45,16 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
   }, [date, setValue, formatYearAndMonth]);
 
   const handleDecreaseMonth = useCallback(() => {
-    if (monthDiff <= 1) return;
+    if (monthsDiff <= 1) return;
     const newDate = new Date(date);
     newDate.setMonth(newDate.getMonth() - 1);
     setValue('reachDate', formatYearAndMonth(newDate));
-  }, [monthDiff, date, setValue, formatYearAndMonth]);
+  }, [monthsDiff, date, setValue, formatYearAndMonth]);
+
+  const handleMonthKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.keyCode === 39) return handleAddMonth(); // arrow right
+    if (e.keyCode === 37) return handleDecreaseMonth(); // arrowLeft
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
@@ -67,61 +62,28 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="amount">Total amount</label>
-        <div>
-          <i>$</i>
-          <CurrencyInput
-            id="amount"
-            min={0}
-            intlConfig={{ locale: 'en-US' }}
-            allowNegativeValue={false}
-            decimalsLimit={2}
-            onValueChange={(value) => setValue('amount', value || '')}
-            {...register('amount')}
-          />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="reachDate">Reach goal by</label>
-        <div>
-          <button onClick={handleDecreaseMonth} disabled={monthDiff <= 1}>{`<`}</button>
-          <div>
-            <span className="month">{monthName}</span>
-            <span className="year">{year}</span>
-            <input id="reachDate" type="month" min={formatYearAndMonth(minDate)} {...register('reachDate')} />
-          </div>
-          <button onClick={handleAddMonth}>{`>`}</button>
-        </div>
-      </div>
-      {parseFloat(amount) > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <td>Monthly amount</td>
-              <td>
-                <strong>${monthAmount}</strong>
-              </td>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <td colSpan={2}>
-                <p>
-                  You{`’`}re planning{' '}
-                  <strong>
-                    {monthDiff} monthly deposit{monthDiff > 1 ? 's' : ''}
-                  </strong>{' '}
-                  to reach your <strong>${formatValue({ value: amount, decimalScale: 2 })}</strong> goal by{' '}
-                  <strong>
-                    {monthName} {year}.
-                  </strong>
-                </p>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      )}
+      <Field label="Total amount" htmlFor="amount">
+        <Icon>
+          <img src={DollarSign} alt="Total Amount" />
+        </Icon>
+        <InputCurrency id="amount" onValueChange={(value) => setValue('amount', value || '')} {...register('amount')} />
+      </Field>
+      <Field label="Reach goal by" htmlFor="reachDate">
+        <Icon onClick={handleDecreaseMonth} disabled={monthsDiff <= 1}>
+          <img src={ChevronLeft} alt="Decrease Month" />
+        </Icon>
+        <InputDate
+          value={reachDate}
+          id="reachDate"
+          min={formatYearAndMonth(minDate)}
+          onKeyDown={handleMonthKeyDown}
+          {...register('reachDate')}
+        />
+        <Icon onClick={handleAddMonth}>
+          <img src={ChevronRight} alt="Add Month" />
+        </Icon>
+      </Field>
+      {parseFloat(amount) > 0 && <PlanSavingGoalInfo amount={amount} reachDate={reachDate} />}
       <Button>Confirm</Button>
     </form>
   );

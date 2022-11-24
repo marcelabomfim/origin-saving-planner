@@ -1,6 +1,16 @@
-import { DefaultTheme } from 'styled-components';
+// import { DefaultTheme } from 'styled-components';
 
-export const originTheme: DefaultTheme = {
+export type OriginTheme = {
+  borderRadius: {
+    xs: string;
+    md: string;
+    lg: string;
+  };
+
+  colors: Record<string, string>;
+};
+
+export const originTheme: OriginTheme = {
   borderRadius: {
     xs: '0.25rem',
     md: '0.5rem',
@@ -9,9 +19,8 @@ export const originTheme: DefaultTheme = {
 
   colors: {
     //background
-    backgroundPrimary: '#E5E5E5',
+    backgroundPrimary: '#F4F8FA',
     backgroundSecondary: '#fff',
-    backgroundTertiary: '#F4F8FA',
 
     //brand
     brandPrimary: '#1B31A8',
