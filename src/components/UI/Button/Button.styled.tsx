@@ -12,6 +12,8 @@ export const Button = styled.button`
   padding: 1rem 2rem;
   width: 20rem;
   max-width: 100%;
+  display: block;
+  margin: 0 auto;
   transition: background ease 0.3s;
 
   &:hover {

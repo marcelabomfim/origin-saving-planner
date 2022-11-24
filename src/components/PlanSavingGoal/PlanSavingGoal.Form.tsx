@@ -9,6 +9,8 @@ import ChevronRight from 'assets/icons/chevron-right.svg';
 
 import { PlanSavingGoalInfo } from './PlanSavingGoal.Info';
 
+import * as ST from './PlanSavingGoal.styled';
+
 type Inputs = {
   amount: string;
   reachDate: string;
@@ -61,30 +63,36 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Field label="Total amount" htmlFor="amount">
-        <Icon>
-          <img src={DollarSign} alt="Total Amount" />
-        </Icon>
-        <InputCurrency id="amount" onValueChange={(value) => setValue('amount', value || '')} {...register('amount')} />
-      </Field>
-      <Field label="Reach goal by" htmlFor="reachDate">
-        <Icon onClick={handleDecreaseMonth} disabled={monthsDiff <= 1}>
-          <img src={ChevronLeft} alt="Decrease Month" />
-        </Icon>
-        <InputDate
-          value={reachDate}
-          id="reachDate"
-          min={formatYearAndMonth(minDate)}
-          onKeyDown={handleMonthKeyDown}
-          {...register('reachDate')}
-        />
-        <Icon onClick={handleAddMonth}>
-          <img src={ChevronRight} alt="Add Month" />
-        </Icon>
-      </Field>
+    <>
+      <ST.PlanSavingGoalForm onSubmit={handleSubmit(onSubmit)}>
+        <Field label="Total amount" htmlFor="amount">
+          <Icon>
+            <img src={DollarSign} alt="Total Amount" />
+          </Icon>
+          <InputCurrency
+            id="amount"
+            onValueChange={(value) => setValue('amount', value || '')}
+            {...register('amount')}
+          />
+        </Field>
+        <Field label="Reach goal by" htmlFor="reachDate">
+          <Icon onClick={handleDecreaseMonth} disabled={monthsDiff <= 1}>
+            <img src={ChevronLeft} alt="Decrease Month" />
+          </Icon>
+          <InputDate
+            value={reachDate}
+            id="reachDate"
+            min={formatYearAndMonth(minDate)}
+            onKeyDown={handleMonthKeyDown}
+            {...register('reachDate')}
+          />
+          <Icon onClick={handleAddMonth}>
+            <img src={ChevronRight} alt="Add Month" />
+          </Icon>
+        </Field>
+      </ST.PlanSavingGoalForm>
       {parseFloat(amount) > 0 && <PlanSavingGoalInfo amount={amount} reachDate={reachDate} />}
       <Button>Confirm</Button>
-    </form>
+    </>
   );
 };

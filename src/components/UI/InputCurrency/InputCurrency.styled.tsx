@@ -6,7 +6,11 @@ export const InputCurrency = styled(CurrencyInput)`
   width: 100%;
   height: 100%;
   font-family: 'Rubik', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.textTertiary};
+
+  @media (min-width: 600px) {
+    font-size: 1.5rem;
+  }
 `;

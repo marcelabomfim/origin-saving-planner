@@ -11,12 +11,15 @@ export const InputDateWrapper = styled.label`
 `;
 
 export const InputDateMonth = styled.span`
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
-export const InputDateYear = styled.span`
-  font-size: 1rem;
+export const InputDateYear = styled(InputDateMonth)`
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textSecondary};
 `;

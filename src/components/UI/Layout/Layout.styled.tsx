@@ -11,7 +11,19 @@ export const LayoutWrapper = styled.div`
 export const LayoutHeader = styled.header`
   background: ${({ theme }) => theme.colors.backgroundSecondary};
   display: flex;
-  padding: 1.5rem 3.5rem;
+  padding: 1rem;
+
+  img {
+    height: 1.5rem;
+  }
+
+  @media (min-width: 600px) {
+    padding: 1.5rem 3.5rem;
+
+    img {
+      height: 2rem;
+    }
+  }
 `;
 
 export const LayoutMain = styled.main`
