@@ -3,14 +3,14 @@ jobs:
   test_and_lint:
     docker:
       - image: circleci/node:latest-browsers
-    working_directory: /home/circleci/frontend-take-home-assignment
+    working_directory: /home/circleci/origin-saving-planner
     steps:
       - checkout
       - restore_cache:
           keys:
-            - frontend-take-home-assignment-deps-{{ .Branch }}-{{ checksum "package.json" }}
-            - frontend-take-home-assignment-deps-develop-{{ checksum "package.json" }}
-            - frontend-take-home-assignment-deps-develop
+            - origin-saving-planner-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - origin-saving-planner-deps-develop-{{ checksum "package.json" }}
+            - origin-saving-planner-deps-develop
       - run:
           name: Install dependencies
           command: |
