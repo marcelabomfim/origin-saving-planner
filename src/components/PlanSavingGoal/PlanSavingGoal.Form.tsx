@@ -73,6 +73,7 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
             id="amount"
             data-testid="amount"
             onValueChange={(value) => setValue('amount', value || '')}
+            placeholder="25,000"
             {...register('amount')}
           />
         </Field>

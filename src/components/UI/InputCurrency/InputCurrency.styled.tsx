@@ -10,6 +10,10 @@ export const InputCurrency = styled(CurrencyInput)`
   font-weight: 600;
   color: ${({ theme }) => theme.colors.textTertiary};
 
+  &::placeholder {
+    opacity: 0.3;
+  }
+
   @media (min-width: 600px) {
     font-size: 1.5rem;
   }
