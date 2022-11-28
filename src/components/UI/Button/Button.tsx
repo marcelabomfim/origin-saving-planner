@@ -7,9 +7,5 @@ type ButtonProps = {
 };
 
 export const Button: FunctionComponent<ButtonProps> = ({ children, title }): JSX.Element => {
-  return (
-    <ST.Button data-testid="button" title={title}>
-      {children}
-    </ST.Button>
-  );
+  return <ST.Button title={title}>{children}</ST.Button>;
 };

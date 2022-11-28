@@ -5,31 +5,35 @@ import { useInputDateValue } from 'components';
 
 import * as ST from './PlanSavingGoal.styled';
 
-type PlanSavingGoalInfoProps = {
+export type PlanSavingGoalInfoProps = ST.PlanSavingGoalInfoProps & {
   amount: string;
   reachDate: string;
 };
 
-export const PlanSavingGoalInfo: FunctionComponent<PlanSavingGoalInfoProps> = ({ amount, reachDate }): JSX.Element => {
+export const PlanSavingGoalInfo: FunctionComponent<PlanSavingGoalInfoProps> = ({
+  amount,
+  reachDate,
+  show,
+}): JSX.Element => {
   const { monthName, monthsDiff, year } = useInputDateValue(reachDate);
 
   const monthAmount = useMemo(() => {
     const value = parseFloat(amount) / monthsDiff;
-    return formatValue({ value: value.toFixed(2), decimalScale: 2 });
+    return value ? formatValue({ value: value.toFixed(2), decimalScale: 2, prefix: '$' }) : '';
   }, [monthsDiff, amount]);
 
   return (
-    <ST.PlanSavingGoalInfo>
+    <ST.PlanSavingGoalInfo show={show} data-testid="resultInfo">
       <h3>
         <span>Monthly amount</span>
-        <strong>${monthAmount}</strong>
+        <strong data-testid="monthlyAmount">{monthAmount}</strong>
       </h3>
       <p>
         You{`’`}re planning{' '}
         <strong>
-          {monthsDiff} monthly deposit{monthsDiff > 1 ? 's' : ''}
+          <span data-testid="monthsDiff">{monthsDiff}</span> monthly deposit{monthsDiff > 1 ? 's' : ''}
         </strong>{' '}
-        to reach your <strong>${formatValue({ value: amount, decimalScale: 2 })}</strong> goal by{' '}
+        to reach your <strong>{formatValue({ value: amount, decimalScale: 2, prefix: '$' })}</strong> goal by{' '}
         <strong>
           {monthName} {year}.
         </strong>

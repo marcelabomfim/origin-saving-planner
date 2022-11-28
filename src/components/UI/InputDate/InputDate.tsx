@@ -16,8 +16,12 @@ export const InputDate: FunctionComponent<InputDateProps> = ({ value, ...props }
   const { monthName, year } = useInputDateValue(value);
   return (
     <ST.InputDateWrapper>
-      <ST.InputDateMonth className="month">{monthName}</ST.InputDateMonth>
-      <ST.InputDateYear className="year">{year}</ST.InputDateYear>
+      <ST.InputDateMonth className="month" data-testid="month">
+        {monthName}
+      </ST.InputDateMonth>
+      <ST.InputDateYear className="year" data-testid="year">
+        {year}
+      </ST.InputDateYear>
       <ST.InputDate type="text" value="" {...props} />
     </ST.InputDateWrapper>
   );

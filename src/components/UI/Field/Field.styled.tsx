@@ -22,7 +22,36 @@ export const FieldGroup = styled.div`
   justify-content: space-between;
   align-items: center;
   border: 1px solid ${({ theme }) => theme.colors.borders};
-  border-radius: 0.25rem;
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
   height: 3.5rem;
   margin: 0.25rem 0 0 0;
+`;
+
+export const FieldIcon = styled.button`
+  background: transparent;
+  border: 0;
+  height: 3.5rem;
+  line-height: 1;
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
+  border-top: 1px solid ${({ theme }) => theme.colors.borders};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borders};
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
+
+  &:hover:not(:disabled) {
+    background: ${({ theme, onClick }) => (onClick ? theme.colors.backgroundPrimary : '')};
+  }
+
+  &:first-child {
+    border-top-left-radius: ${({ theme }) => theme.borderRadius.xs};
+    border-bottom-left-radius: ${({ theme }) => theme.borderRadius.xs};
+  }
+
+  &:last-child {
+    border-top-right-radius: ${({ theme }) => theme.borderRadius.xs};
+    border-bottom-right-radius: ${({ theme }) => theme.borderRadius.xs};
+  }
 `;

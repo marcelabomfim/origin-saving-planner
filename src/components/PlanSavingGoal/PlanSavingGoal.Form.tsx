@@ -1,7 +1,7 @@
 import React, { FunctionComponent, KeyboardEventHandler, useCallback, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { Button, Field, Icon, InputCurrency, InputDate, useInputDateValue } from 'components';
+import { Button, Field, InputCurrency, InputDate, useInputDateValue } from 'components';
 
 import DollarSign from 'assets/icons/dollar-sign.svg';
 import ChevronLeft from 'assets/icons/chevron-left.svg';
@@ -55,7 +55,7 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
 
   const handleMonthKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.keyCode === 39) return handleAddMonth(); // arrow right
-    if (e.keyCode === 37) return handleDecreaseMonth(); // arrowLeft
+    if (e.keyCode === 37) return handleDecreaseMonth(); // arrow left
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -66,32 +66,34 @@ export const PlanSavingGoalForm: FunctionComponent = (): JSX.Element => {
     <>
       <ST.PlanSavingGoalForm onSubmit={handleSubmit(onSubmit)}>
         <Field label="Total amount" htmlFor="amount">
-          <Icon>
+          <Field.Icon>
             <img src={DollarSign} alt="Total Amount" />
-          </Icon>
+          </Field.Icon>
           <InputCurrency
             id="amount"
+            data-testid="amount"
             onValueChange={(value) => setValue('amount', value || '')}
             {...register('amount')}
           />
         </Field>
         <Field label="Reach goal by" htmlFor="reachDate">
-          <Icon onClick={handleDecreaseMonth} disabled={monthsDiff <= 1}>
+          <Field.Icon onClick={handleDecreaseMonth} disabled={monthsDiff <= 1} data-testid="previousMonth">
             <img src={ChevronLeft} alt="Decrease Month" />
-          </Icon>
+          </Field.Icon>
           <InputDate
             value={reachDate}
             id="reachDate"
+            data-testid="reachDate"
             min={formatYearAndMonth(minDate)}
             onKeyDown={handleMonthKeyDown}
             {...register('reachDate')}
           />
-          <Icon onClick={handleAddMonth}>
+          <Field.Icon onClick={handleAddMonth} data-testid="nextMonth">
             <img src={ChevronRight} alt="Add Month" />
-          </Icon>
+          </Field.Icon>
         </Field>
       </ST.PlanSavingGoalForm>
-      {parseFloat(amount) > 0 && <PlanSavingGoalInfo amount={amount} reachDate={reachDate} />}
+      <PlanSavingGoalInfo amount={amount} reachDate={reachDate} show={parseFloat(amount) > 0} />
       <Button>Confirm</Button>
     </>
   );
