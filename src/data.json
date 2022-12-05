@@ -1,0 +1,11 @@
+{
+  "goals": [
+    {
+      "slug": "build-an-emergency-fund",
+      "title": "Build an emergency fund",
+      "image": "build-an-emergency-fund.svg",
+      "amount": 0,
+      "reachDate": ""
+    }
+  ]
+}
